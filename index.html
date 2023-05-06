@@ -1,0 +1,74 @@
+<link rel="stylesheet" href="styles.css">
+<article class="profile">
+	<div class="profile-image">
+		<img src="https://xatimg.com/image/9ZmyN3amSYac.jpg" />
+	</div>
+	<h2 class="profile-username">ⲓ ⳽ ⲁ</h2>
+	<h2 class="profile-user-handle">xat.me/iisa</h2>
+	<small class="profile-user-handle2">Ella era una princesa sin corona, un ángel sin alas, una cenicienta sin zapato, una heroina sin capa ....pero también era, la caperucita que se comió al lobo, la blancanieves que tiró la manzana y la bella que dejó plantada a la bestia.</small>
+	<small class="profile-user-handle3">Ella no había nacido para ser etiquetada, si no para ser libre, y no había mayor rebeldía que burlarse de los cuentacuentos.</small>
+	<div class="list-item-info">
+		<div class="player">
+			</button>
+			<div class="player-top-content">
+				<div class="list-item-info">
+					<div class="info-title">He pasado por mucho.</div>
+					<div class="info-subtitle">Yarge.</div>
+				</div>
+				<div class="buttons-wrapper">
+					<button class="btn btn-play" onclick="toggleAudio()">
+						<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play" fill="#1B1B1B">
+							<path d="M5 3l14 9-14 9V3z" />
+						</svg>
+					</button>
+				</div>
+			</div>
+			<div id="player"></div>
+			<div class="proggress-part">
+				<span class="time">00:00</span>
+				<div class="proggres-bar">
+					<span class="progress"></span>
+				</div>
+				<span class="time"></span>
+			</div>
+		</div>
+</article>
+<script>
+	var audio = new Audio('https://dl.sndup.net/j4y2/he%20pasado%20por%20mucho.mp3');
+	var progress = document.querySelector('.progress');
+	var progressBar = document.querySelector('.proggres-bar');
+	var currentTime = document.querySelectorAll('.time')[0];
+	var durationTime = document.querySelectorAll('.time')[1];
+
+	function toggleAudio() {
+		var button = document.querySelector('.btn-play');
+		var player = document.querySelector('#player');
+		if (audio.paused) {
+			audio.play();
+			player.appendChild(audio);
+			button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pause" fill="#1B1B1B"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>';
+		} else {
+			audio.pause();
+			button.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play" fill="#1B1B1B"><path d="M5 3l14 9-14 9V3z"/></svg>';
+		}
+	}
+	audio.addEventListener('timeupdate', function() {
+		var duration = audio.duration;
+		var currentTimeVal = audio.currentTime;
+		var progressWidth = (currentTimeVal / duration) * 100;
+		progress.style.width = progressWidth + '%';
+		currentTime.textContent = formatTime(currentTimeVal);
+		durationTime.textContent = formatTime(duration);
+	});
+
+	function formatTime(time) {
+		var minutes = Math.floor(time / 60);
+		var seconds = Math.floor(time % 60);
+		return (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+	}
+	const player = document.querySelector('.player');
+	const playButton = document.getElementById('play-button');
+	playButton.addEventListener('click', () => {
+		player.classList.toggle('active');
+	});
+</script>
